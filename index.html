@@ -129,6 +129,8 @@
                         <option class="select-opt" id="opt-2"></option>
                         <option class="select-opt" id="opt-3"></option>
                         <option class="select-opt" id="opt-4"></option>
+                        <option class="select-opt" id="opt-5"></option>
+
                         <!-- <option class="select-opt" id="opt-5"></option>
                         <option class="select-opt" id="opt-6"></option>
                         <option class="select-opt" id="opt-7"></option>
@@ -139,9 +141,9 @@
                     </select>
                     <div id="rissue" class="result"></div>
     
-                    <!-- <label id="lallergy"></label> <Br>
-                    <input style="margin-top: -35px;margin-bottom: 20px;" class="input" id="allergy" type="text" value="" name="allergy" />
-                    <div style="margin-top: -30px" id="rallergy" class="result"></div> -->
+                    <label id="lother"></label> <Br>
+                        <input style="margin-top: -35px;margin-bottom: 20px;" class="input" id="other" type="text" value="" name="other" required/>
+                        <div style="margin-top: -30px" id="rother" class="result"></div>
     
     
                     <input type="hidden" id="language" name="language" value="id" />
@@ -162,18 +164,18 @@
             var name = params.get('name')
             var OrderID = params.get('OrderID')
             var issue = params.get('issue')
-            // var allergy = params.get('allergy')
+            var other = params.get('other')
     
-            // document.getElementById('allergy').hidden = true;
-            // console.log({ issue, allergy, language });
+            document.getElementById('other').hidden = true;
+            console.log({ issue, other, language });
             document.getElementById('issue').addEventListener("change", function () {
                 let value = this.value
                 console.log(value);
-                // if (value == "Saya alergi terhadap obat yang diresepkan." || value == "I'm allergic to the medicines prescribed.") {
-                //     document.getElementById('allergy').hidden = false;
-                // } else {
-                //     document.getElementById('allergy').hidden = true;
-                // }
+                if (value == "Lainnya [mohon sebutkan]." || value == "Other [please specify].") {
+                    document.getElementById('other').hidden = false;
+                } else {
+                    document.getElementById('other').hidden = true;
+                }
             });
             if (language == 'id') {
                 document.getElementById('name').placeholder = "Nama Anda"
@@ -185,13 +187,13 @@
                 document.getElementById('lmobile').innerHTML = 'Nomor Telepon';
                 document.getElementById('lOrderID').innerHTML = 'ID Konsultasi:';
                 document.getElementById('lissue').innerHTML = "Jenis Masalah"
-                // document.getElementById('allergy').placeholder = "Tuliskan nama obat yang memicu alergi"
+                document.getElementById('other').placeholder = ""
                 document.getElementById('submit').innerHTML = 'Kirim Tiket';
                 document.getElementById('opt-1').innerHTML = "Jadwal konsultasi saya berbeda dari yang saya pilih.";
                 document.getElementById('opt-2').innerHTML = "Saya tidak dapat menemukan detail pesanan untuk konsultasi terjadwal saya."
                 document.getElementById('opt-3').innerHTML = "Saya tidak menerima notifikasi pengingat untuk konsultasi terjadwal saya."
                 document.getElementById('opt-4').innerHTML = "Saya tidak dapat membatalkan atau mengubah jadwal konsultasi terjadwal saya meskipun belum melewati batas waktu."
-                // document.getElementById('opt-5').innerHTML = ""
+                document.getElementById('opt-5').innerHTML = "Lainnya [mohon sebutkan]."
                 // document.getElementById('opt-6').innerHTML = ""
                 // document.getElementById('opt-7').innerHTML = ""
                 // document.getElementById('opt-8').innerHTML = ""
@@ -209,14 +211,14 @@
                 document.getElementById('lemail').innerHTML = "Active email ID"
                 document.getElementById('lOrderID').innerHTML = 'Order ID:';
                 document.getElementById('lissue').innerHTML = "Type of issue"
-                // document.getElementById('allergy').placeholder = "name medicine allergic to"
+                document.getElementById('other').placeholder = ""
                 document.getElementById('lmobile').innerHTML = 'Mobile Number';
                 document.getElementById('submit').innerHTML = 'Confirm';
                 document.getElementById('opt-1').innerHTML = "My consultation is scheduled for a different time than the one I selected."
                 document.getElementById('opt-2').innerHTML = "I can’t find the order details for my scheduled consultation."
                 document.getElementById('opt-3').innerHTML = "I didn’t receive reminder notifications for my scheduled consultation."
                 document.getElementById('opt-4').innerHTML = "I couldn’t cancel or reschedule my scheduled consultation even though I still have time to do that."
-                // document.getElementById('opt-5').innerHTML = ""
+                document.getElementById('opt-5').innerHTML = "Other [please specify]."
                 // document.getElementById('opt-6').innerHTML = "I can’t cancel my Home Lab booking."
                 // document.getElementById('opt-7').innerHTML = "I can’t reschedule my procedure."
                 // document.getElementById('opt-8').innerHTML = "I haven’t received my test results and it’s past the estimated time."
@@ -232,32 +234,32 @@
                 let e = document.getElementById('email');
                 let c = document.getElementById('issue');
                 let o = document.getElementById('OrderID');
-                // let a = document.getElementById('allergy')
+                let a = document.getElementById('other')
                 let s = document.getElementById('submit');
                 n.setAttribute("type", "hidden");
                 m.setAttribute("type", "hidden");
                 e.setAttribute("type", "hidden");
                 o.setAttribute("type", "hidden");
                 c.hidden = true;
-                // a.hidden = true;
+                a.hidden = true;
                 s.style.visibility = "hidden";
                 document.getElementById('rname').innerHTML = name;
                 document.getElementById('rmobile').innerHTML = mobile;
                 document.getElementById('remail').innerHTML = email;
                 document.getElementById('rissue').innerHTML = issue;
-                // document.getElementById('rallergy').innerHTML = "";
+                document.getElementById('rother').innerHTML = "";
                 document.getElementById('rOrderID').innerHTML = OrderID;
                 n.setAttribute("value", name);
                 m.setAttribute("value", mobile);
                 e.setAttribute("value", email);
                 c.setAttribute("value", issue);
                 o.setAttribute("value", OrderID);
-                // a.setAttribute("value", allergy);
+                a.setAttribute("value", other);
                 let sendData = { name, mobile, email, OrderID, issue }
-                // if (issue == "Saya alergi terhadap obat yang diresepkan." || issue == "I'm allergic to the medicines prescribed.") {
-                //     document.getElementById('rallergy').innerHTML = allergy;
-                //     sendData.allergy = allergy
-                // }
+                if (issue == "Lainnya [mohon sebutkan]." || issue == "Other [please specify].") {
+                    document.getElementById('rother').innerHTML = other;
+                    sendData.other = other
+                }
                 myFunction(sendData)
             }
     
